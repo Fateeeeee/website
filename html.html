@@ -1,0 +1,83 @@
+<html>    <!--使用！+tab 可以快速创建html模板-->  <!--运行的话就复制路径进谷歌浏览器即可--><!--代码有误左边文件名会红-->
+<head>
+	<meta charset="utf-8">
+	<title>VUE</title>
+</head>
+<body>
+	<script type="text/javascript" src="vue.js"></script>
+	<script type="text/javascript" src="vue-router.js"></script>
+	<div id="root">
+		<p>Is Hello world!</p>
+		<p>{{site}}</p>
+		<p>{{file}}</p>
+		<p>{{content}}</p>
+		
+		<section>
+			<textarea v-model="content"></textarea>
+			<div v-html="message"></div>
+			<div v-text="message"></div>
+		</section>
+		<table>
+			<tr>
+				<th>下标</th>
+				<th>ID</th>
+				<th>姓名</th>
+			</tr>
+			<tr v-for="(pro,index) in prolist">   <!--遍历prolist数组表格输出-->
+				<td>{{index+1}}</td>
+				<td>{{pro.ID}}</td>
+				<td>{{pro.name}}</td>
+			</tr>
+		</table>
+		<!--输出组件-->
+		<mc></mc>
+	</div>
+
+	<button v-on:click="show = !show">
+		显示/隐藏
+	</button>
+	<transition name="fades">
+		<p v-if="show">hello</p>
+	</transition>
+	<script>		
+	
+	Vue.component('mc',{
+			template: '<div>A custom component!</div>'
+		})
+	var vm=new Vue({
+		el:"#root",   /*说明挂载在id为root下的div，及其作用于为该div的内部*/
+		data:{
+				show:true,
+				content: "This is a note",
+				site:"www.baidu.com",
+				file:"sda", //普通字符
+				message:'<b>加粗HTML</b>', //html字符要用v-html输出
+				prolist:[
+					{
+						"ID":"001",
+						"name":"s1"
+					},
+					{
+						"ID":"002",
+						"name":"s2"
+					}
+				]
+			}
+		}
+	)
+
+
+	</script>
+	<style>
+		.fades-enter-active,.fades-leave-active{
+			transition: opacity 1s
+		}
+		.fades-enter,.fades-leave-to{
+			opacity: 0
+		}
+		.fades-leave,.fades-enter-to{
+			opacity: 1
+		}
+	</style>
+</body>
+</html>
